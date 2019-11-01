@@ -1,61 +1,83 @@
   class Stack
     def initialize
       # create ivar to store stack here!
-      @stack = []
+      @store = []
     end
 
     def push(el)
       # adds an element to the stack
-      @stack << el
+      store << el
     end
 
     def pop
       # removes one element from the stack
-      @stack.pop
+      store.pop
+    end
+
+    def size
+      store.length
+    end
+
+    def empty?
+      store.empty?
     end
 
     def peek
       # returns, but doesn't remove, the top element in the stack
-      @stack.first
+      store.last
     end
+
+    def inspect
+      "#<Stack:#{self.object_id}>"
+    end
+
+    private
+    attr_reader :store
   end
 
   class Queue
     def initialize
-        @queue = []
+      @inner_array = []
     end
 
     def enqueue(el)
-        @queue << el
+      inner_array << el
     end
 
     def dequeue
-        @queue.shift
+      inner_array.shift
     end
 
-    def peek
-        @queue.first
+    def show
+      inner_array.dup
     end
+
+    def empty?
+      inner_array.empty?
+    end
+
+    private
+    attr_reader :inner_array
   end
 
   class Map
 
     def initialize
-        @map = []
+        @out_array = []
         @key = Set.new
     end
 
     def set(key, value)
         @key << key
         @key.each do |k|
-            if k == key && @map.length < @key.length
-                @map << [k, value]
+            if k == key && out_array.length < @key.length
+                out_array << [k, value]
             end
         end
     end
 
     def get(key)
-        @map.each do |sub_arr|
+        out_array.each do |sub_arr|
             if sub_arr.first == key
                 return sub_arr.last
             end
@@ -64,16 +86,18 @@
 
     def delete(key)
         @key.delete(key)
-        @map.each do |sub_arr|
+        out_array.each do |sub_arr|
             if sub_arr.first == key
-                @map.delete(sub_arr)
+                out_array.delete(sub_arr)
             end
         end
-        @map
     end
 
     def show
-        @map
+        out_array.dup
     end
+
+    private
+    attr_reader :out_array
 
   end
